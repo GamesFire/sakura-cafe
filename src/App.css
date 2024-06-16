@@ -1,0 +1,15 @@
+body {
+  @apply font-montserrat;
+}
+
+.btn {
+  @apply flex items-center text-lg bg-btn-color py-2 px-3 rounded-2xl shadow-md;
+}
+
+.btn:hover {
+  @apply bg-btn-active transition-colors duration-300;
+}
+
+.btn::before {
+  @apply inline-block w-6 h-6;
+}

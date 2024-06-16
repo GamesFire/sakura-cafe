@@ -1,0 +1,15 @@
+.carousel-container {
+  @apply relative max-lg:h-[400px] h-[500px];
+}
+
+.carousel-container .MuiBox-root {
+  @apply z-20;
+}
+
+.overlay {
+  @apply absolute top-0 left-0 w-full h-full bg-black/40 z-10;
+}
+
+.hero-text {
+  @apply absolute inset-0 flex flex-col items-center justify-center text-white text-center;
+}

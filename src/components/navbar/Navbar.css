@@ -1,0 +1,19 @@
+.navbar {
+  @apply max-lg:my-4 flex items-center justify-between max-lg:text-lg text-xl;
+}
+
+.link {
+  @apply max-lg:py-1 max-lg:px-2 block py-2 px-3 rounded-2xl;
+}
+
+.link.active {
+  @apply bg-btn-color;
+}
+
+.link:not(:last-child) {
+  @apply max-lg:mr-4 mr-16;
+}
+
+.link:hover {
+  @apply bg-btn-color shadow-md transition-all duration-300;
+}
