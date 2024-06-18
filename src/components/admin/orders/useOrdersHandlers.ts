@@ -1,4 +1,6 @@
 import { useAppDispatch } from "@/hooks/redux";
+import { useHandleApiError } from "@/hooks/useHandleApiError";
+import useNotification from "@/hooks/useNotification";
 import { useGetFoodsQuery } from "@/services/food";
 import {
   useAcceptOrderMutation,
@@ -39,6 +41,8 @@ export const useOrdersHandlers = () => {
     useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
   const [selectedFoods, setSelectedFoods] = useState<IFood[]>([]);
+  const { showNotification, NotificationComponent } = useNotification();
+  const handleApiError = useHandleApiError();
 
   useEffect(() => {
     if (ordersData) {
@@ -51,28 +55,40 @@ export const useOrdersHandlers = () => {
   }, [ordersData, foodsData, dispatch]);
 
   const handleAcceptOrder = async (id: number) => {
-    const result = await acceptOrder({
-      orderId: id,
-    });
+    try {
+      const result = await acceptOrder({
+        orderId: id,
+      }).unwrap();
 
-    if (result.data) {
-      dispatch(updateCurrentOrder(result.data));
-      setRows((prevRows) =>
-        prevRows.map((row) => (row.id === id ? result.data : row))
-      );
+      if (result) {
+        showNotification("Замовлення успішно прийнято", "success");
+        dispatch(updateCurrentOrder(result));
+        setRows((prevRows) =>
+          prevRows.map((row) => (row.id === id ? result : row))
+        );
+      }
+    } catch (error: any) {
+      const errorMessage = handleApiError(error);
+      showNotification(errorMessage, "error");
     }
   };
 
   const handleRejectOrder = async (id: number) => {
-    const result = await rejectOrder({
-      orderId: id,
-    });
+    try {
+      const result = await rejectOrder({
+        orderId: id,
+      }).unwrap();
 
-    if (result.data) {
-      dispatch(updateCurrentOrder(result.data));
-      setRows((prevRows) =>
-        prevRows.map((row) => (row.id === id ? result.data : row))
-      );
+      if (result) {
+        showNotification("Замовлення успішно відхилено", "success");
+        dispatch(updateCurrentOrder(result));
+        setRows((prevRows) =>
+          prevRows.map((row) => (row.id === id ? result : row))
+        );
+      }
+    } catch (error: any) {
+      const errorMessage = handleApiError(error);
+      showNotification(errorMessage, "error");
     }
   };
 
@@ -102,5 +118,6 @@ export const useOrdersHandlers = () => {
     handleFoodsDetailClick,
     setIsUserDetailDialogOpen,
     setIsFoodsDetailDialogOpen,
+    NotificationComponent,
   };
 };

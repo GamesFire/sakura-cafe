@@ -1,5 +1,5 @@
 .carousel-container {
-  @apply relative max-lg:h-[400px] h-[500px];
+  @apply relative 6xl:h-[800px] max-lg:h-[400px] h-[500px];
 }
 
 .carousel-container .MuiBox-root {

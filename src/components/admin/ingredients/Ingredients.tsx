@@ -25,6 +25,7 @@ const Ingredients: FC = () => {
     handleIngredientsCancelClick,
     processIngredientsRowUpdate,
     handleIngredientsRowModesModelChange,
+    NotificationComponent,
   } = useIngredientsHandlers();
 
   const columns: GridColDef[] = [
@@ -86,7 +87,11 @@ const Ingredients: FC = () => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Typography variant="h4" align="center" marginBlock={2}>
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{ marginBlock: { sm: 2, xxl: 6 } }}
+      >
         Список інгредієнтов
       </Typography>
       <DataGrid
@@ -107,6 +112,7 @@ const Ingredients: FC = () => {
           toolbar: { handleAddIngredient, isEditing },
         }}
       />
+      {NotificationComponent}
     </Box>
   );
 };

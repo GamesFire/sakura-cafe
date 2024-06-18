@@ -26,6 +26,7 @@ const Orders: FC = () => {
     handleFoodsDetailClick,
     setIsUserDetailDialogOpen,
     setIsFoodsDetailDialogOpen,
+    NotificationComponent,
   } = useOrdersHandlers();
 
   const columns: GridColDef[] = [
@@ -114,7 +115,11 @@ const Orders: FC = () => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Typography variant="h4" align="center" marginBlock={2}>
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{ marginBlock: { sm: 2, xxl: 6 } }}
+      >
         Список замовлень
       </Typography>
       <DataGrid
@@ -140,6 +145,7 @@ const Orders: FC = () => {
         open={isFoodsDetailDialogOpen}
         onClose={() => setIsFoodsDetailDialogOpen(false)}
       />
+      {NotificationComponent}
     </Box>
   );
 };

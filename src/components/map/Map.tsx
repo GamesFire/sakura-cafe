@@ -19,7 +19,12 @@ const center = {
 const Map: FC = () => {
   return (
     <Paper sx={{ padding: "1rem", backgroundColor: "#FFFFFF" }}>
-      <Box sx={{ width: "100%", height: { xs: "400px", sm: "500px" } }}>
+      <Box
+        sx={{
+          width: "100%",
+          height: { xs: "400px", sm: "500px", xxl: "600px" },
+        }}
+      >
         <MapContainer
           center={center}
           zoom={20}

@@ -32,6 +32,7 @@ const TrayModal: FC<TrayModalProps> = ({
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("sm"));
   const isSm = useMediaQuery(theme.breakpoints.between("sm", "md"));
+  const isXxl = useMediaQuery(theme.breakpoints.up("xxl"));
 
   const getModalStyle = () => {
     if (!anchorRef.current) {
@@ -42,8 +43,8 @@ const TrayModal: FC<TrayModalProps> = ({
 
     return {
       top: `${rect.bottom + window.scrollY}px`,
-      left: `${(!isXs && !isSm) && rect.right + window.scrollX}px`,
-      transform: `${(!isXs && !isSm) && "translateX(-100%)"}`,
+      left: `${!isXs && !isSm && rect.right + window.scrollX}px`,
+      transform: `${!isXs && !isSm && "translateX(-100%)"}`,
     };
   };
 
@@ -82,8 +83,8 @@ const TrayModal: FC<TrayModalProps> = ({
             sx={{
               ...getModalStyle(),
               position: isXs || isSm ? "fixed" : "absolute",
-              width: isXs || isSm ? "90%" : 560,
-              height: isXs || isSm ? 400 : 580,
+              width: isXs || isSm ? "90%" : isXxl ? 660 : 560,
+              height: isXs || isSm ? 400 : isXxl ? 680 : 580,
               bgcolor: "background.paper",
               boxShadow: 3,
               borderRadius: 2,

@@ -108,7 +108,11 @@ const TrayContent: FC<TrayContentProps> = ({
         <>
           <Box
             component="img"
-            sx={{ width: 64, height: 64, mb: 2 }}
+            sx={{
+              width: { sm: 64, xxl: 100 },
+              height: { sm: 64, xxl: 100 },
+              mb: 2,
+            }}
             alt="Empty Cart"
             src="/images/icons/empty-tray.png"
           />

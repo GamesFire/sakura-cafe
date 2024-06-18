@@ -28,8 +28,8 @@ const FoodItem: FC<FoodItemProps> = ({ food }) => {
       variant="outlined"
       sx={{
         display: "flex",
-        maxWidth: "460px",
-        height: "200px",
+        maxWidth: { xs: "460px", xxl: "560px" },
+        height: { xs: "200px", xxl: "240px" },
         marginInline: { xs: "8px", sm: "auto" },
         backgroundColor: "#FFE8E8",
         borderRadius: "20px",
@@ -39,7 +39,7 @@ const FoodItem: FC<FoodItemProps> = ({ food }) => {
       <CardMedia
         component="img"
         sx={{
-          width: { xs: "100px", sm: "180px" },
+          width: { xs: "100px", sm: "180px", xxl: "220px" },
           cursor: "pointer",
         }}
         image={`${import.meta.env.VITE_API_URL}/${food.image}`}
@@ -70,7 +70,7 @@ const FoodItem: FC<FoodItemProps> = ({ food }) => {
           <Typography
             component="h6"
             sx={{
-              fontSize: { xs: "1.15rem", sm: "1.5rem" },
+              fontSize: { xs: "1.15rem", sm: "1.5rem", xxl: "1.875rem" },
               textAlign: "center",
               cursor: "pointer",
             }}
@@ -105,7 +105,7 @@ const FoodItem: FC<FoodItemProps> = ({ food }) => {
           </Box>
         </Box>
         <Box display="flex" justifyContent="flex-end">
-          <AddToTrayButton food={food} paddingBlock={8} paddingInline={12} />
+          <AddToTrayButton food={food} paddingBlock={1} paddingInline={2} />
         </Box>
       </CardContent>
     </Card>

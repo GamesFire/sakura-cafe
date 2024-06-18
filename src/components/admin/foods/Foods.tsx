@@ -40,6 +40,7 @@ const Foods: FC = () => {
     handleFoodsCancelClick,
     processFoodsRowUpdate,
     handleFoodsRowModesModelChange,
+    NotificationComponent,
   } = useFoodsHandlers();
 
   const columns: GridColDef[] = [
@@ -144,7 +145,11 @@ const Foods: FC = () => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Typography variant="h4" align="center" marginBlock={2}>
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{ marginBlock: { sm: 2, xxl: 6 } }}
+      >
         Список їжі
       </Typography>
       <DataGrid
@@ -165,6 +170,7 @@ const Foods: FC = () => {
           toolbar: { handleAddFood, isEditing },
         }}
       />
+      {NotificationComponent}
     </Box>
   );
 };

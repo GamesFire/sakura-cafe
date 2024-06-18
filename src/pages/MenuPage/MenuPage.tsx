@@ -75,7 +75,7 @@ const MenuPage: FC = () => {
               justifyContent: "center",
               alignItems: "center",
               width: { xs: "80%", sm: "30%" },
-              fontSize: "16px",
+              fontSize: { xxl: "1.5rem" },
               textAlign: "center",
               marginInline: "auto",
               marginBlock: 16,
@@ -93,7 +93,7 @@ const MenuPage: FC = () => {
               justifyContent: "center",
               alignItems: "center",
               width: { xs: "80%", sm: "30%" },
-              fontSize: "16px",
+              fontSize: { xxl: "1.5rem" },
               textAlign: "center",
               marginInline: "auto",
               marginBlock: 16,
@@ -106,11 +106,16 @@ const MenuPage: FC = () => {
         )}
         {!isLoading && !isFetching && sortedFoods && sortedFoods.length > 0 && (
           <Box
-            display="grid"
-            gridTemplateColumns="repeat(auto-fill, minmax(300px, 460px))"
-            justifyContent="center"
-            alignItems="center"
-            gap={6}
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "repeat(auto-fill, minmax(300px, 460px))",
+                xxl: "repeat(auto-fill, minmax(400px, 560px))",
+              },
+              justifyContent: "center",
+              alignItems: "center",
+              gap: { xs: 6, xxl: 10 },
+            }}
           >
             {sortedFoods.map((food) => (
               <Box key={food.name}>

@@ -23,6 +23,7 @@ const Categories: FC = () => {
     handleCategoriesCancelClick,
     processCategoriesRowUpdate,
     handleCategoriesRowModesModelChange,
+    NotificationComponent,
   } = useCategoriesHandlers();
 
   const columns: GridColDef[] = [
@@ -68,7 +69,11 @@ const Categories: FC = () => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Typography variant="h4" align="center" marginBlock={2}>
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{ marginBlock: { sm: 2, xxl: 6 } }}
+      >
         Список категорій
       </Typography>
       <DataGrid
@@ -95,6 +100,7 @@ const Categories: FC = () => {
         }}
         pageSizeOptions={[10]}
       />
+      {NotificationComponent}
     </Box>
   );
 };

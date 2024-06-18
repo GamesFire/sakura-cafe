@@ -4,16 +4,20 @@ import { isApiErrorResponse } from "@/utils/isApiErrorResponse";
 export const useHandleApiError = () => {
   return useCallback((error: unknown): string => {
     if (isApiErrorResponse(error)) {
-      return error.message;
-    } else if (
-      typeof error === "object" &&
-      error !== null &&
-      "data" in error &&
-      isApiErrorResponse((error as any).data)
-    ) {
-      return (error as any).data.message;
+      if ("data" in error && Array.isArray(error.data)) {
+        const formattedErrors = error.data.map((errorMessage: string) => {
+          const errorMessageParts = errorMessage.split(" - ");
+          return errorMessageParts.length > 1
+            ? errorMessageParts[1]
+            : errorMessageParts[0];
+        });
+        return formattedErrors.join(", ");
+      } else {
+        return (error as any).data.message;
+      }
     } else {
-      return "Сталася помилка під час оформлення замовлення.";
+      console.error(error);
+      return "Сталася нерозпізнана помилка.";
     }
   }, []);
 };

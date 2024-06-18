@@ -47,7 +47,7 @@ const FeedbackForm: FC = () => {
         align="center"
         marginBottom={4}
         sx={{
-          fontSize: { xs: "0.875rem", sm: "1rem" },
+          fontSize: { xs: "0.875rem", sm: "1rem", xxl: "1.125rem" },
         }}
       >
         Будь ласка, використовуйте форму нижче, щоб поділитися з нами своїми

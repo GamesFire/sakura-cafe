@@ -1,4 +1,6 @@
 import { useAppDispatch } from "@/hooks/redux";
+import { useHandleApiError } from "@/hooks/useHandleApiError";
+import useNotification from "@/hooks/useNotification";
 import {
   useGetFeedbacksQuery,
   useProcessedFeedbackMutation,
@@ -32,6 +34,8 @@ export const useFeedbackHandlers = () => {
     null
   );
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
+  const { showNotification, NotificationComponent } = useNotification();
+  const handleApiError = useHandleApiError();
 
   useEffect(() => {
     if (feedbacksData) {
@@ -50,8 +54,14 @@ export const useFeedbackHandlers = () => {
 
   const handleProcessedFeedbackClick = async () => {
     if (selectedFeedbackId !== null) {
-      await processedFeedback({ feedbackId: selectedFeedbackId });
-      setSelectedFeedbackId(null);
+      try {
+        await processedFeedback({ feedbackId: selectedFeedbackId }).unwrap();
+        showNotification("Зворотний зв'язок оброблено успішно", "success");
+        setSelectedFeedbackId(null);
+      } catch (error: any) {
+        const errorMessage = handleApiError(error);
+        showNotification(errorMessage, "error");
+      }
     }
   };
 
@@ -80,5 +90,6 @@ export const useFeedbackHandlers = () => {
     setIsUserDetailDialogOpen,
     setIsFeedbackDetailDialogOpen,
     handleFeedbacksCheckboxChange,
+    NotificationComponent,
   };
 };

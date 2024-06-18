@@ -1,4 +1,6 @@
 import { useAppDispatch } from "@/hooks/redux";
+import { useHandleApiError } from "@/hooks/useHandleApiError";
+import useNotification from "@/hooks/useNotification";
 import {
   useCreateIngredientMutation,
   useDeleteIngredientMutation,
@@ -35,6 +37,8 @@ export const useIngredientsHandlers = () => {
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const editingRowId = useRef<GridRowId | null>(null);
+  const { showNotification, NotificationComponent } = useNotification();
+  const handleApiError = useHandleApiError();
 
   useEffect(() => {
     if (ingredients) {
@@ -99,9 +103,15 @@ export const useIngredientsHandlers = () => {
   };
 
   const handleIngredientsDeleteClick = (id: GridRowId) => async () => {
-    await deleteIngredient(id as number);
-    setRows((prevRows) => prevRows.filter((row) => row.id !== id));
-    dispatch(removeIngredient(id as number));
+    try {
+      await deleteIngredient(id as number).unwrap();
+      showNotification("Інгредієнт успішно видалено", "success");
+      setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+      dispatch(removeIngredient(id as number));
+    } catch (error: any) {
+      const errorMessage = handleApiError(error);
+      showNotification(errorMessage, "error");
+    }
   };
 
   const handleIngredientsCancelClick = useCallback(
@@ -143,32 +153,54 @@ export const useIngredientsHandlers = () => {
   }, [isEditing, handleIngredientsCancelClick]);
 
   const processIngredientsRowUpdate = async (newRow: GridRowModel) => {
-    if (Number.isInteger(newRow.id)) {
-      const result = await updateIngredient({
-        id: newRow.id as number,
-        newTitle: newRow.title,
-        newImage: newRow.image instanceof File ? newRow.image : undefined,
-      });
+    const originalRow = rows.find((row) => row.id === newRow.id);
 
-      if (result.data) {
-        dispatch(updateCurrentIngredient(result.data));
-        setRows((prevRows) =>
-          prevRows.map((row) => (row.id === newRow.id ? result.data : row))
-        );
+    if (Number.isInteger(newRow.id)) {
+      try {
+        const result = await updateIngredient({
+          id: newRow.id as number,
+          newTitle: newRow.title,
+          newImage: newRow.image instanceof File ? newRow.image : undefined,
+        }).unwrap();
+
+        if (result) {
+          showNotification("Інгредієнт успішно оновлено", "success");
+          dispatch(updateCurrentIngredient(result));
+          setRows((prevRows) =>
+            prevRows.map((row) => (row.id === newRow.id ? result : row))
+          );
+        }
+      } catch (error: any) {
+        const errorMessage = handleApiError(error);
+        showNotification(errorMessage, "error");
+
+        if (originalRow) {
+          setRows((prevRows) =>
+            prevRows.map((row) => (row.id === newRow.id ? originalRow : row))
+          );
+        }
       }
     } else {
-      const result = await createIngredient({
-        title: newRow.title,
-        image: newRow.image instanceof File ? newRow.image : undefined,
-      });
+      try {
+        const result = await createIngredient({
+          title: newRow.title,
+          image: newRow.image instanceof File ? newRow.image : undefined,
+        }).unwrap();
 
-      if (result.data) {
-        dispatch(addIngredient(result.data));
-        setRows((prevRows) =>
-          prevRows.map((row) => (row.id === newRow.id ? result.data : row))
-        );
+        if (result) {
+          showNotification("Інгредієнт успішно створено", "success");
+          dispatch(addIngredient(result));
+          setRows((prevRows) =>
+            prevRows.map((row) => (row.id === newRow.id ? result : row))
+          );
+        }
+      } catch (error: any) {
+        const errorMessage = handleApiError(error);
+        showNotification(errorMessage, "error");
+        setRows((prevRows) => prevRows.filter((row) => row.id !== newRow.id));
       }
     }
+
     return newRow;
   };
 
@@ -194,5 +226,6 @@ export const useIngredientsHandlers = () => {
     handleIngredientsCancelClick,
     processIngredientsRowUpdate,
     handleIngredientsRowModesModelChange,
+    NotificationComponent,
   };
 };

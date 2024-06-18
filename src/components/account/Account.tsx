@@ -62,7 +62,7 @@ const Account: FC = () => {
         aria-expanded={!!anchorEl}
         onClick={handleClick}
       >
-        <span className="ml-2">
+        <span className="6xl:ml-4 ml-2">
           {userInfo ? truncateString(userInfo.name, 8) : "Вхід"}
         </span>
       </Button>

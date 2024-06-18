@@ -16,7 +16,7 @@ const AboutUsPage: FC = () => {
       >
         <Paper
           sx={{
-            maxWidth: "800px",
+            maxWidth: { sm: "800px", xxl: "1000px" },
             color: "#ffffff",
             textAlign: "justify",
             backgroundColor: "rgba(0, 0, 0, 0.6)",
@@ -30,7 +30,8 @@ const AboutUsPage: FC = () => {
             align="center"
             gutterBottom
             sx={{
-              fontSize: { xs: "1.75rem", sm: "2.125rem" },
+              fontSize: { xs: "1.75rem", sm: "2.125rem", xxl: "3rem" },
+              marginBottom: { xxl: 6 },
             }}
           >
             Про нас
@@ -38,7 +39,8 @@ const AboutUsPage: FC = () => {
           <Typography
             paragraph
             sx={{
-              fontSize: { xs: "0.875rem", sm: "1rem" },
+              fontSize: { xs: "0.875rem", sm: "1rem", xxl: "1.5rem" },
+              marginBottom: { xxl: 4 },
             }}
           >
             Ласкаво просимо до SakuraCafe! Затишний куточок, для справжніх
@@ -49,7 +51,8 @@ const AboutUsPage: FC = () => {
           <Typography
             paragraph
             sx={{
-              fontSize: { xs: "0.875rem", sm: "1rem" },
+              fontSize: { xs: "0.875rem", sm: "1rem", xxl: "1.5rem" },
+              marginBottom: { xxl: 4 },
             }}
           >
             Наша пристрасть до японської кухні виходить за рамки буденності,
@@ -60,7 +63,8 @@ const AboutUsPage: FC = () => {
           <Typography
             paragraph
             sx={{
-              fontSize: { xs: "0.875rem", sm: "1rem" },
+              fontSize: { xs: "0.875rem", sm: "1rem", xxl: "1.5rem" },
+              marginBottom: { xxl: 4 },
             }}
           >
             Завітайте до нашого безтурботного оазису, де аромат свіжозавареної
@@ -71,7 +75,8 @@ const AboutUsPage: FC = () => {
           <Typography
             paragraph
             sx={{
-              fontSize: { xs: "0.875rem", sm: "1rem" },
+              fontSize: { xs: "0.875rem", sm: "1rem", xxl: "1.5rem" },
+              marginBottom: { xxl: 4 },
             }}
           >
             Як прихильники якості та автентичності, ми використовуємо лише
@@ -83,7 +88,7 @@ const AboutUsPage: FC = () => {
           <Typography
             paragraph
             sx={{
-              fontSize: { xs: "0.875rem", sm: "1rem" },
+              fontSize: { xs: "0.875rem", sm: "1rem", xxl: "1.5rem" },
             }}
           >
             Пориньте у вишукані смаки Японії у SakuraCafe, де кожна трапеза – це

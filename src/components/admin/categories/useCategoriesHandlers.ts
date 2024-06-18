@@ -21,10 +21,12 @@ import {
 } from "@/store/slices/categorySlice";
 import { GridRowEditStopReasons, GridRowModes } from "@mui/x-data-grid";
 import { ICategory } from "@/store/models/ICategory";
+import useNotification from "@/hooks/useNotification";
+import { useHandleApiError } from "@/hooks/useHandleApiError";
 
 export const useCategoriesHandlers = () => {
   const dispatch = useAppDispatch();
-  const { data: categories, isLoading, error } = useGetCategoriesQuery();
+  const { data, isLoading, error } = useGetCategoriesQuery();
   const [createCategory] = useCreateCategoryMutation();
   const [updateCategory] = useUpdateCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
@@ -34,13 +36,15 @@ export const useCategoriesHandlers = () => {
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const editingRowId = useRef<GridRowId | null>(null);
+  const { showNotification, NotificationComponent } = useNotification();
+  const handleApiError = useHandleApiError();
 
   useEffect(() => {
-    if (categories) {
-      dispatch(setCategories(categories));
-      setRows(categories);
+    if (data) {
+      dispatch(setCategories(data));
+      setRows(data);
     }
-  }, [categories, dispatch]);
+  }, [data, dispatch]);
 
   const handleAddCategory = () => {
     const id = Math.random();
@@ -84,9 +88,15 @@ export const useCategoriesHandlers = () => {
   };
 
   const handleCategoriesDeleteClick = (id: GridRowId) => async () => {
-    await deleteCategory(id as number);
-    setRows((prevRows) => prevRows.filter((row) => row.id !== id));
-    dispatch(removeCategory(id as number));
+    try {
+      await deleteCategory(id as number).unwrap();
+      showNotification("Категорію успішно видалено", "success");
+      setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+      dispatch(removeCategory(id as number));
+    } catch (error: any) {
+      const errorMessage = handleApiError(error);
+      showNotification(errorMessage, "error");
+    }
   };
 
   const handleCategoriesCancelClick = useCallback(
@@ -128,26 +138,45 @@ export const useCategoriesHandlers = () => {
   }, [isEditing, handleCategoriesCancelClick]);
 
   const processCategoriesRowUpdate = async (newRow: GridRowModel) => {
-    if (Number.isInteger(newRow.id)) {
-      const result = await updateCategory({
-        id: newRow.id as number,
-        newName: newRow.name,
-      });
+    const originalRow = rows.find((row) => row.id === newRow.id);
 
-      if (result.data) {
-        dispatch(updateCurrentCategory(result.data));
-        setRows((prevRows) =>
-          prevRows.map((row) => (row.id === newRow.id ? result.data : row))
-        );
+    if (Number.isInteger(newRow.id)) {
+      try {
+        const result = await updateCategory({
+          id: newRow.id as number,
+          newName: newRow.name,
+        }).unwrap();
+        if (result) {
+          showNotification("Категорію успішно оновлено", "success");
+          dispatch(updateCurrentCategory(result));
+          setRows((prevRows) =>
+            prevRows.map((row) => (row.id === newRow.id ? result : row))
+          );
+        }
+      } catch (error: any) {
+        const errorMessage = handleApiError(error);
+        showNotification(errorMessage, "error");
+
+        if (originalRow) {
+          setRows((prevRows) =>
+            prevRows.map((row) => (row.id === newRow.id ? originalRow : row))
+          );
+        }
       }
     } else {
-      const result = await createCategory({ name: newRow.name });
-
-      if (result.data) {
-        dispatch(addCategory(result.data));
-        setRows((prevRows) =>
-          prevRows.map((row) => (row.id === newRow.id ? result.data : row))
-        );
+      try {
+        const result = await createCategory({ name: newRow.name }).unwrap();
+        if (result) {
+          showNotification("Категорію успішно створено", "success");
+          dispatch(addCategory(result));
+          setRows((prevRows) =>
+            prevRows.map((row) => (row.id === newRow.id ? result : row))
+          );
+        }
+      } catch (error: any) {
+        const errorMessage = handleApiError(error);
+        showNotification(errorMessage, "error");
+        setRows((prevRows) => prevRows.filter((row) => row.id !== newRow.id));
       }
     }
     return newRow;
@@ -174,5 +203,6 @@ export const useCategoriesHandlers = () => {
     handleCategoriesCancelClick,
     processCategoriesRowUpdate,
     handleCategoriesRowModesModelChange,
+    NotificationComponent,
   };
 };

@@ -41,8 +41,8 @@ const FoodsDetailDialog: FC<FoodsDetailProps> = ({ foods, open, onClose }) => (
               variant="outlined"
               sx={{
                 display: "flex",
-                width: "600px",
-                height: "180px",
+                width: { sm: "600px", xxl: "800px" },
+                height: { sm: "180px", xxl: "240px" },
                 marginInline: "auto",
                 backgroundColor: "#FFE8E8",
                 borderRadius: "20px",

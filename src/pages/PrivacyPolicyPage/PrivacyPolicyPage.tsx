@@ -15,7 +15,8 @@ const PrivacyPolicyPage: FC = () => {
         align="center"
         gutterBottom
         sx={{
-          fontSize: { xs: "1.75rem", sm: "2.125rem" },
+          fontSize: { xs: "1.75rem", sm: "2.125rem", xxl: "3rem" },
+          marginBottom: { xxl: 4 },
         }}
       >
         Політика конфіденційності

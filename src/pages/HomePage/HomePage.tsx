@@ -19,7 +19,7 @@ const HomePage: FC = () => {
     <>
       <section className="carousel-container">
         <Carousel
-          className="max-lg:h-[400px] h-[500px]"
+          className="6xl:h-[800px] max-lg:h-[400px] h-[500px]"
           indicators={false}
           navButtonsAlwaysInvisible={true}
           stopAutoPlayOnHover={false}
@@ -39,11 +39,11 @@ const HomePage: FC = () => {
             component="div"
             className="font-bold"
             sx={{
-              fontSize: { xs: "2rem", sm: "3rem" },
+              fontSize: { xs: "2rem", sm: "3rem", xxl: "4.5rem" },
             }}
           >
             Там, де аромат цвіте, як сакура
-          </Typography>
+          </Typography> 
         </Box>
       </section>
       <MostPopularFood />

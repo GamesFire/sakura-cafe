@@ -14,14 +14,25 @@ const IngredientImageCarousel: FC<IngredientImageCarouselProps> = ({
   const isXs = useMediaQuery(theme.breakpoints.down("sm"));
   const isSm = useMediaQuery(theme.breakpoints.between("sm", "md"));
   const isMd = useMediaQuery(theme.breakpoints.between("md", "lg"));
+  const isXxl = useMediaQuery(theme.breakpoints.up("xxl"));
 
   const getVisibleItems = () => {
     if (isXs) return 1;
     if (isSm || isMd) return 2;
+    if (isXxl) return 4;
     return 3;
   };
 
   const visibleItems = getVisibleItems();
+
+  const groups = ingredients.reduce((acc, ingredient, index) => {
+    const groupIndex = Math.floor(index / visibleItems);
+    if (!acc[groupIndex]) {
+      acc[groupIndex] = [];
+    }
+    acc[groupIndex].push(ingredient);
+    return acc;
+  }, [] as IIngredient[][]);
 
   return (
     <Carousel
@@ -40,52 +51,45 @@ const IngredientImageCarousel: FC<IngredientImageCarouselProps> = ({
         },
       }}
     >
-      {ingredients
-        .reduce((acc, _ingredient, index) => {
-          if (index % visibleItems === 0) {
-            acc.push(ingredients.slice(index, index + visibleItems));
-          }
-          return acc;
-        }, [] as IIngredient[][])
-        .map((group, index) => (
-          <Box
-            key={index}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {group.map((ingredient) => (
+      {groups.map((group, index) => (
+        <Box
+          key={index}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {group.map((ingredient) => (
+            <Box
+              key={ingredient.id}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                padding: 1,
+                margin: "0 8px",
+                minWidth: "120px",
+              }}
+            >
               <Box
-                key={ingredient.id}
+                component="img"
+                src={`${import.meta.env.VITE_API_URL}/${ingredient.image}`}
+                alt={ingredient.title}
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  padding: 1,
-                  margin: "0 8px",
-                  minWidth: "120px",
+                  width: "100%",
+                  height: "100px",
+                  objectFit: "cover",
+                  borderRadius: "8px",
                 }}
-              >
-                <Box
-                  component="img"
-                  src={`${import.meta.env.VITE_API_URL}/${ingredient.image}`}
-                  alt={ingredient.title}
-                  sx={{
-                    width: "100%",
-                    height: "100px",
-                    objectFit: "cover",
-                    borderRadius: "8px",
-                  }}
-                />
-                <Typography variant="body1" marginTop="4px">
-                  {ingredient.title}
-                </Typography>
-              </Box>
-            ))}
-          </Box>
-        ))}
+              />
+              <Typography variant="body1" marginTop="4px">
+                {ingredient.title}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      ))}
     </Carousel>
   );
 };

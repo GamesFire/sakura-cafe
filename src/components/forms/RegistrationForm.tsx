@@ -34,7 +34,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({
   setErrorMessages,
 }) => {
   const [acceptTerms, setAcceptTerms] = useState<boolean>(false);
-  const [registration, { isLoading: isLoadingRegistration, isSuccess }] =
+  const [registration, { isLoading: isLoadingRegistration }] =
     useRegistrationMutation();
   const dispatch = useAppDispatch();
 
@@ -69,24 +69,6 @@ const RegistrationForm: FC<RegistrationFormProps> = ({
       onErrors(err);
     }
   };
-
-  if (isSuccess) {
-    return (
-      <DialogContent>
-        <DialogContentText align="justify">
-          Реєстрація пройшла успішно! На вашу електронну адресу було відправлено
-          повідомлення для активації облікового запису. Будь ласка, перевірте
-          свою електронну пошту та виконайте інструкції, щоб підтвердити свій
-          обліковий запис.
-        </DialogContentText>
-        <DialogActions sx={{ padding: 0, paddingTop: "1rem" }}>
-          <Button variant="contained" onClick={onClose}>
-            Закрити
-          </Button>
-        </DialogActions>
-      </DialogContent>
-    );
-  }
 
   return (
     <>

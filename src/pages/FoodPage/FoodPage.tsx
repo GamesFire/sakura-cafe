@@ -64,7 +64,7 @@ const FoodPage: FC = () => {
             justifyContent: "center",
             alignItems: "center",
             width: { xs: "90%", sm: "40%" },
-            fontSize: "16px",
+            fontSize: { xxl: "1.5rem" },
             textAlign: "center",
             marginBlock: 16,
           }}

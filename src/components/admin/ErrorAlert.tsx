@@ -10,7 +10,7 @@ const ErrorAlert: FC = () => {
           justifyContent: "center",
           alignItems: "center",
           width: "40%",
-          fontSize: "16px",
+          fontSize: { xxl: "1.5rem" },
           textAlign: "center",
           marginBlock: 16,
         }}

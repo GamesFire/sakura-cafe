@@ -29,6 +29,7 @@ const Feedbacks: FC = () => {
     setIsUserDetailDialogOpen,
     setIsFeedbackDetailDialogOpen,
     handleFeedbacksCheckboxChange,
+    NotificationComponent,
   } = useFeedbackHandlers();
 
   const columns: GridColDef[] = [
@@ -119,7 +120,11 @@ const Feedbacks: FC = () => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Typography variant="h4" align="center" marginBlock={2}>
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{ marginBlock: { sm: 2, xxl: 6 } }}
+      >
         Список зворотніх зв'язків
       </Typography>
       <DataGrid
@@ -150,6 +155,7 @@ const Feedbacks: FC = () => {
           onClose={() => setIsFeedbackDetailDialogOpen(false)}
         />
       )}
+      {NotificationComponent}
     </Box>
   );
 };

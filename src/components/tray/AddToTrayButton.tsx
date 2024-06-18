@@ -50,8 +50,8 @@ const AddToTrayButton: FC<AddToTrayButtonProps> = ({
       <Button
         className="btn"
         sx={{
-          paddingBlock: { paddingBlock },
-          paddingInline: { paddingInline },
+          paddingBlock: { sm: paddingBlock, xxl: "1rem" },
+          paddingInline: { sm: paddingInline, xxl: "2rem" },
           borderRadius: "16px",
         }}
         onClick={handleClickFood}

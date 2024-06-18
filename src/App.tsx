@@ -46,7 +46,7 @@ const App: FC = () => {
       <ScrollToTopButton />
       <ThemeProvider theme={THEME}>
         <Header />
-        <main className="6xl:h-screen">
+        <main className="6xl:min-h-screen">
           <Outlet />
         </main>
         <Footer />

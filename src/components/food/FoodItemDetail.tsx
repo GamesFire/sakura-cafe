@@ -93,8 +93,8 @@ const FoodItemDetail: FC<FoodItemDetailProps> = ({
             component="img"
             sx={{
               width: "100%",
-              maxWidth: "500px",
-              height: "500px",
+              maxWidth: { sm: "500px", xxl: "600px" },
+              height: { sm: "500px", xxl: "600px" },
               aspectRatio: "1 / 1",
               objectFit: "cover",
               borderRadius: "16px",
@@ -111,9 +111,9 @@ const FoodItemDetail: FC<FoodItemDetailProps> = ({
             alignItems="center"
           >
             <Typography
-              marginBottom="4px"
               sx={{
-                fontSize: { xs: "2rem", sm: "3rem" },
+                fontSize: { xs: "2rem", sm: "3rem", xxl: "3.75rem" },
+                marginBottom: { sm: "4px", xxl: 4 },
               }}
             >
               {foodDetail.name}
@@ -126,16 +126,16 @@ const FoodItemDetail: FC<FoodItemDetailProps> = ({
           <Typography
             marginBottom={1}
             sx={{
-              fontSize: { xs: "1rem", sm: "1.25rem" },
+              fontSize: { xs: "1rem", sm: "1.25rem", xxl: "1.5rem" },
             }}
           >
             <span className="font-bold">Ціна:</span> {foodDetail.price}
             &nbsp;&#165;
           </Typography>
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" marginBottom={1}>
             <Typography
               sx={{
-                fontSize: { xs: "1rem", sm: "1.25rem" },
+                fontSize: { xs: "1rem", sm: "1.25rem", xxl: "1.5rem" },
               }}
             >
               <span className="font-bold">Рейтинг:</span> {foodDetail.rating}
@@ -153,7 +153,7 @@ const FoodItemDetail: FC<FoodItemDetailProps> = ({
           <Box display="flex" alignItems="center" marginBottom={1}>
             <Typography
               sx={{
-                fontSize: { xs: "1rem", sm: "1.25rem" },
+                fontSize: { xs: "1rem", sm: "1.25rem", xxl: "1.5rem" },
               }}
             >
               <span className="font-bold">Ваша оцінка:</span>
@@ -170,7 +170,7 @@ const FoodItemDetail: FC<FoodItemDetailProps> = ({
           <Typography
             gutterBottom
             sx={{
-              fontSize: { xs: "1rem", sm: "1.25rem" },
+              fontSize: { xs: "1rem", sm: "1.25rem", xxl: "1.5rem" },
             }}
           >
             <span className="font-bold">Інгредієнти:</span>
@@ -179,8 +179,8 @@ const FoodItemDetail: FC<FoodItemDetailProps> = ({
           <Box display="flex" justifyContent="center" marginTop="32px">
             <AddToTrayButton
               food={foodDetail}
-              paddingBlock={16}
-              paddingInline={32}
+              paddingBlock={2}
+              paddingInline={4}
             />
           </Box>
         </Grid>

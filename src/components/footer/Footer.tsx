@@ -32,6 +32,7 @@ const Footer: FC = () => {
               a: {
                 display: "block",
                 color: "inherit",
+                fontSize: { xxl: "1.125rem" },
                 ":first-of-type": {
                   marginBottom: { sm: "20px" },
                 },
@@ -74,6 +75,7 @@ const Footer: FC = () => {
             sx={{
               textAlign: { xs: "center", sm: "left" },
               marginBlock: { xs: "20px", sm: "0" },
+              fontSize: { xxl: "1.125rem" },
             }}
           >
             <Typography variant="body1" gutterBottom>
@@ -90,7 +92,7 @@ const Footer: FC = () => {
         <Box mt={3} textAlign="center">
           <Typography
             sx={{
-              fontSize: { xs: "0.875rem", sm: "1rem" },
+              fontSize: { xs: "0.875rem", sm: "1rem", xxl: "1.25rem" },
             }}
           >
             © 2024 SakuraCafe - Всі права захищені

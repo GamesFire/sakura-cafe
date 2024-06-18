@@ -17,14 +17,15 @@ const IngredientsSelectEditCell: FC<IngredientsSelectEditCellProps> = (
   const apiRef = useGridApiContext();
 
   const selectedIngredientIds = useMemo(() => {
-    if (typeof value === "string") {
+    if (Array.isArray(value)) {
+      return value;
+    } else if (typeof value === "string") {
       const ingredientsFromState = ingredients.filter((ingredient) =>
         value.split(", ").includes(ingredient.title)
       );
       return ingredientsFromState.map((ingredient) => ingredient.id);
-    } else {
-      return value as number[];
     }
+    return [];
   }, [value, ingredients]);
 
   const handleChange = useCallback(

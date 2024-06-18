@@ -23,6 +23,7 @@ const FoodItemInTray: FC<FoodItemInTrayProps> = ({ food }) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  const isXxl = useMediaQuery(theme.breakpoints.up("xxl"));
 
   const handleClickDelete = () => {
     dispatch(removeFoodFromTray(food.id));
@@ -34,7 +35,7 @@ const FoodItemInTray: FC<FoodItemInTrayProps> = ({ food }) => {
       sx={{
         display: "flex",
         width: "100%",
-        height: "80px",
+        height: { sm: "80px", xxl: "100px" },
         backgroundColor: "#FFE8E8",
         borderRadius: "16px",
         overflow: "hidden",
@@ -45,7 +46,7 @@ const FoodItemInTray: FC<FoodItemInTrayProps> = ({ food }) => {
     >
       <CardMedia
         component="img"
-        sx={{ width: isXs ? "60px" : "100px" }}
+        sx={{ width: isXs ? "60px" : isXxl ? "120px" : "100px" }}
         image={`${import.meta.env.VITE_API_URL}/${food.image}`}
         loading="lazy"
         alt={`Зображення ${food.name}`}

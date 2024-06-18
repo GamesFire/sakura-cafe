@@ -60,7 +60,7 @@ const OrderHistoryPage: FC = () => {
             justifyContent: "center",
             alignItems: "center",
             width: { xs: "80%", sm: "40%" },
-            fontSize: "16px",
+            fontSize: { xxl: "1.5rem" },
             textAlign: "center",
             marginBlock: 16,
           }}
@@ -97,7 +97,13 @@ const OrderHistoryPage: FC = () => {
 
   return (
     <Container sx={{ minHeight: "100vh" }}>
-      <Typography variant="h4" align="center" marginBlock={4}>
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{
+          marginBlock: { sm: 4, xxl: 8 },
+        }}
+      >
         Ваша історія замовлень
       </Typography>
       <Box

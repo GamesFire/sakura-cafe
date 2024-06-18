@@ -75,9 +75,10 @@ const Category: FC = () => {
     <>
       <Typography
         component="h4"
-        marginTop={2}
         sx={{
-          fontSize: { xs: "1.75rem", sm: "2.125rem" },
+          fontSize: { xs: "1.75rem", sm: "2.125rem", xxl: "3rem" },
+          marginTop: { sm: 2, xxl: 6 },
+          marginBottom: { xxl: 4 },
         }}
       >
         Категорії
@@ -88,7 +89,7 @@ const Category: FC = () => {
           color="primary"
           sx={{
             display: { xs: "block", sm: "none" },
-            marginTop: 2,
+            marginTop: { sm: 2, xxl: 6 },
             width: "100%",
           }}
           onClick={toggleDropdown}

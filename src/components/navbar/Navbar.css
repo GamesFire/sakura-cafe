@@ -1,9 +1,9 @@
 .navbar {
-  @apply max-lg:my-4 flex items-center justify-between max-lg:text-lg text-xl;
+  @apply max-lg:my-4 flex items-center justify-between max-lg:text-lg 6xl:text-4xl text-xl;
 }
 
 .link {
-  @apply max-lg:py-1 max-lg:px-2 block py-2 px-3 rounded-2xl;
+  @apply max-lg:py-1 max-lg:px-2 6xl:py-4 6xl:px-6 block py-2 px-3 rounded-2xl;
 }
 
 .link.active {
@@ -11,7 +11,7 @@
 }
 
 .link:not(:last-child) {
-  @apply max-lg:mr-4 mr-16;
+  @apply max-lg:mr-4 6xl:mr-20 mr-16;
 }
 
 .link:hover {

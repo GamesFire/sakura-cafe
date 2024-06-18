@@ -48,7 +48,7 @@ const MostPopularFood: FC = () => {
           justifyContent: "center",
           alignItems: "center",
           width: { xs: "90%", sm: "40%" },
-          fontSize: "16px",
+          fontSize: { xxl: "1.5rem" },
           textAlign: "center",
           marginInline: "auto",
           marginBlock: 16,
@@ -62,14 +62,17 @@ const MostPopularFood: FC = () => {
   }
 
   return (
-    <Box component="section" className="max-lg:mt-16 max-lg:mb-24 mt-20 mb-32">
+    <Box
+      component="section"
+      className="6xl:mt-32 6xl:mb-36 max-lg:mt-16 max-lg:mb-24 mt-20 mb-32"
+    >
       <Container>
         <Typography
           component="h4"
           sx={{
-            fontSize: { xs: "1.25rem", sm: "2.125rem" },
+            fontSize: { xs: "1.25rem", sm: "2.125rem", xxl: "3rem" },
             textAlign: "center",
-            marginBottom: 6,
+            marginBottom: { sm: 6, xxl: 10 },
           }}
         >
           Найпопулярніша їжа з усіх
@@ -79,7 +82,7 @@ const MostPopularFood: FC = () => {
             variant="outlined"
             sx={{
               display: "flex",
-              maxWidth: "600px",
+              maxWidth: { xs: "600px", xxl: "800px" },
               marginInline: "auto",
               backgroundColor: "#FFE8E8",
               borderRadius: "20px",
@@ -88,7 +91,10 @@ const MostPopularFood: FC = () => {
           >
             <CardMedia
               component="img"
-              sx={{ width: { xs: "100px", sm: "200px" }, cursor: "pointer" }}
+              sx={{
+                width: { xs: "100px", sm: "200px", xxl: "260px" },
+                cursor: "pointer",
+              }}
               image={`${import.meta.env.VITE_API_URL}/${mostPopularFood.image}`}
               loading="lazy"
               alt={`Зображення ${mostPopularFood.name} найпопулярнішої їжі з усіх`}
@@ -106,7 +112,7 @@ const MostPopularFood: FC = () => {
               <Typography
                 component="h5"
                 sx={{
-                  fontSize: { xs: "1.15rem", sm: "1.5rem" },
+                  fontSize: { xs: "1.15rem", sm: "1.5rem", xxl: "2rem" },
                   textAlign: "center",
                   cursor: "pointer",
                 }}
@@ -155,8 +161,8 @@ const MostPopularFood: FC = () => {
               <Box display="flex" justifyContent="flex-end">
                 <AddToTrayButton
                   food={mostPopularFood}
-                  paddingBlock={8}
-                  paddingInline={12}
+                  paddingBlock={1}
+                  paddingInline={2}
                 />
               </Box>
             </CardContent>

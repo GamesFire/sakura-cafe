@@ -13,8 +13,12 @@ import { useUsersHandlers } from "./useUsersHandlers";
 
 const Users: FC = () => {
   const { data: users, isLoading, error } = useGetUsersQuery();
-  const { selectedUserId, handleUsersCheckboxChange, handleAddAdminClick } =
-    useUsersHandlers();
+  const {
+    selectedUserId,
+    handleUsersCheckboxChange,
+    handleAddAdminClick,
+    NotificationComponent,
+  } = useUsersHandlers();
 
   const columns: GridColDef[] = [
     {
@@ -74,7 +78,11 @@ const Users: FC = () => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Typography variant="h4" align="center" marginBlock={2}>
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{ marginBlock: { sm: 2, xxl: 6 } }}
+      >
         Список усіх користувачів
       </Typography>
       <DataGrid
@@ -95,6 +103,7 @@ const Users: FC = () => {
         disableRowSelectionOnClick
         autoHeight
       />
+      {NotificationComponent}
     </Box>
   );
 };

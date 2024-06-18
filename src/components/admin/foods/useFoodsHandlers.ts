@@ -1,4 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useHandleApiError } from "@/hooks/useHandleApiError";
+import useNotification from "@/hooks/useNotification";
 import { useGetCategoriesQuery } from "@/services/category";
 import {
   useCreateFoodMutation,
@@ -32,6 +34,9 @@ export const useFoodsHandlers = () => {
   const { categories } = useAppSelector(
     (state: RootState) => state.categorySlice
   );
+  const { ingredients } = useAppSelector(
+    (state: RootState) => state.ingredientSlice
+  );
   const dispatch = useAppDispatch();
   const {
     data: foods,
@@ -57,6 +62,8 @@ export const useFoodsHandlers = () => {
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const editingRowId = useRef<GridRowId | null>(null);
+  const { showNotification, NotificationComponent } = useNotification();
+  const handleApiError = useHandleApiError();
 
   useEffect(() => {
     if (foods && categoriesData && ingredientsData) {
@@ -115,9 +122,15 @@ export const useFoodsHandlers = () => {
   };
 
   const handleFoodsDeleteClick = (id: GridRowId) => async () => {
-    await deleteFood(id as number);
-    setRows((prevRows) => prevRows.filter((row) => row.id !== id));
-    dispatch(removeFood(id as number));
+    try {
+      await deleteFood(id as number).unwrap();
+      showNotification("Страву успішно видалено", "success");
+      setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+      dispatch(removeFood(id as number));
+    } catch (error: any) {
+      const errorMessage = handleApiError(error);
+      showNotification(errorMessage, "error");
+    }
   };
 
   const handleFoodsCancelClick = useCallback(
@@ -171,49 +184,86 @@ export const useFoodsHandlers = () => {
     };
 
   const processFoodsRowUpdate = async (newRow: GridRowModel) => {
+    const originalRow = rows.find((row) => row.id === newRow.id);
+
     const categoryFromState = categories.find(
       (category) => category.name === newRow.category
     );
     const categoryId = categoryFromState ? categoryFromState.id : -1;
 
+    let ingredientIds: number[] | null = null;
+
     if (!Array.isArray(newRow.ingredients)) {
-      newRow.ingredients = [];
+      const ingredientTitles = newRow.ingredients
+        .split(", ")
+        .map((title: string) => title.trim());
+
+      ingredientIds = ingredientTitles
+        .map((ingredientTitle: string) => {
+          const ingredient = ingredients.find(
+            (ing) => ing.title === ingredientTitle
+          );
+          return ingredient ? ingredient.id : null;
+        })
+        .filter((id: any): id is number => id !== null);
     }
 
     if (Number.isInteger(newRow.id)) {
-      const result = await updateFood({
-        id: newRow.id as number,
-        newName: newRow.name,
-        newPrice: newRow.price,
-        newRating: newRow.rating,
-        newImage: newRow.image instanceof File ? newRow.image : undefined,
-        newCategoryId: categoryId,
-        newIngredientsIds: newRow.ingredients,
-      });
+      try {
+        const result = await updateFood({
+          id: newRow.id as number,
+          newName: newRow.name,
+          newPrice: newRow.price,
+          newRating: newRow.rating,
+          newImage: newRow.image instanceof File ? newRow.image : undefined,
+          newCategoryId: categoryId,
+          newIngredientsIds: !ingredientIds
+            ? newRow.ingredients
+            : ingredientIds,
+        }).unwrap();
 
-      if (result.data) {
-        dispatch(updateCurrentFood(result.data));
-        setRows((prevRows) =>
-          prevRows.map((row) => (row.id === newRow.id ? result.data : row))
-        );
+        if (result) {
+          showNotification("Страву успішно оновлено", "success");
+          dispatch(updateCurrentFood(result));
+          setRows((prevRows) =>
+            prevRows.map((row) => (row.id === newRow.id ? result : row))
+          );
+        }
+      } catch (error: any) {
+        const errorMessage = handleApiError(error);
+        showNotification(errorMessage, "error");
+
+        if (originalRow) {
+          setRows((prevRows) =>
+            prevRows.map((row) => (row.id === newRow.id ? originalRow : row))
+          );
+        }
       }
     } else {
-      const result = await createFood({
-        name: newRow.name,
-        price: newRow.price,
-        rating: newRow.rating,
-        categoryId: categoryId,
-        image: newRow.image instanceof File ? newRow.image : undefined,
-        ingredientsIds: newRow.ingredients,
-      });
+      try {
+        const result = await createFood({
+          name: newRow.name,
+          price: newRow.price,
+          rating: newRow.rating,
+          categoryId: categoryId,
+          image: newRow.image instanceof File ? newRow.image : undefined,
+          ingredientsIds: !ingredientIds ? newRow.ingredients : ingredientIds,
+        }).unwrap();
 
-      if (result.data) {
-        dispatch(addFood(result.data));
-        setRows((prevRows) =>
-          prevRows.map((row) => (row.id === newRow.id ? result.data : row))
-        );
+        if (result) {
+          showNotification("Страву успішно створено", "success");
+          dispatch(addFood(result));
+          setRows((prevRows) =>
+            prevRows.map((row) => (row.id === newRow.id ? result : row))
+          );
+        }
+      } catch (error: any) {
+        const errorMessage = handleApiError(error);
+        showNotification(errorMessage, "error");
+        setRows((prevRows) => prevRows.filter((row) => row.id !== newRow.id));
       }
     }
+
     return newRow;
   };
 
@@ -243,5 +293,6 @@ export const useFoodsHandlers = () => {
     handleFoodsCancelClick,
     processFoodsRowUpdate,
     handleFoodsRowModesModelChange,
+    NotificationComponent,
   };
 };

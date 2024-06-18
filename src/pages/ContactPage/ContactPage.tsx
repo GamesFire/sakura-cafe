@@ -12,7 +12,7 @@ const ContactPage: FC = () => {
           align="center"
           gutterBottom
           sx={{
-            fontSize: { xs: "1.75rem", sm: "2.125rem" },
+            fontSize: { xs: "1.75rem", sm: "2.125rem", xxl: "3rem" },
           }}
         >
           Дякуємо за інтерес до SakuraCafe!
@@ -37,7 +37,7 @@ const ContactPage: FC = () => {
           align="center"
           marginBottom={6}
           sx={{
-            fontSize: { xs: "1.75rem", sm: "2.125rem" },
+            fontSize: { xs: "1.75rem", sm: "2.125rem", xxl: "3rem" },
           }}
         >
           Зв’язатися з нами
