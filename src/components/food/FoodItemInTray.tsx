@@ -14,6 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { IFood } from "@/store/models/IFood";
 import { useAppDispatch } from "@/hooks/redux";
 import { removeFoodFromTray } from "@/store/slices/traySlice";
+import { useImageUrls } from "@/hooks/useImageUrls";
 
 interface FoodItemInTrayProps {
   food: IFood;
@@ -24,6 +25,9 @@ const FoodItemInTray: FC<FoodItemInTrayProps> = ({ food }) => {
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("sm"));
   const isXxl = useMediaQuery(theme.breakpoints.up("xxl"));
+
+  const foodItemInTrayImagePath = food ? [food.image] : [];
+  const foodItemInTrayImageUrl = useImageUrls(foodItemInTrayImagePath);
 
   const handleClickDelete = () => {
     dispatch(removeFoodFromTray(food.id));
@@ -47,7 +51,7 @@ const FoodItemInTray: FC<FoodItemInTrayProps> = ({ food }) => {
       <CardMedia
         component="img"
         sx={{ width: isXs ? "60px" : isXxl ? "120px" : "100px" }}
-        image={`${import.meta.env.VITE_API_URL}/${food.image}`}
+        image={foodItemInTrayImageUrl[0]}
         loading="lazy"
         alt={`Зображення ${food.name}`}
       />

@@ -13,3 +13,11 @@
 .hero-text {
   @apply absolute inset-0 flex flex-col items-center justify-center text-white text-center;
 }
+
+.fallback-background {
+  @apply flex justify-center items-center w-full h-full bg-white border-b-2;
+}
+
+.fallback-background .hero-text {
+  @apply text-black;
+}

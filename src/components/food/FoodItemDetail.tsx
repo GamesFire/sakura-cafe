@@ -18,6 +18,7 @@ import { addRating, removeRating } from "@/store/slices/ratingSlice";
 import type { RootState } from "@/store/store";
 import AddToTrayButton from "../tray/AddToTrayButton";
 import useNotification from "@/hooks/useNotification";
+import { useImageUrls } from "@/hooks/useImageUrls";
 
 interface FoodItemDetailProps {
   foodDetail: IFood;
@@ -38,8 +39,12 @@ const FoodItemDetail: FC<FoodItemDetailProps> = ({
   const [createRating] = useCreateRatingMutation();
   const [deleteRating] = useDeleteRatingMutation();
   const dispatch = useAppDispatch();
+
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const foodItemDetailImagePath = foodDetail ? [foodDetail.image] : [];
+  const foodItemDetailImageUrl = useImageUrls(foodItemDetailImagePath);
 
   const { showNotification, NotificationComponent } = useNotification();
 
@@ -99,7 +104,7 @@ const FoodItemDetail: FC<FoodItemDetailProps> = ({
               objectFit: "cover",
               borderRadius: "16px",
             }}
-            src={`${import.meta.env.VITE_API_URL}/${foodDetail.image}`}
+            src={foodItemDetailImageUrl[0]}
             alt={`Зображення ${foodDetail.name}`}
           />
         </Grid>

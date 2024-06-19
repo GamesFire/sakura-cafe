@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetMostPopularFoodQuery } from "@/services/food";
 import AddToTrayButton from "../tray/AddToTrayButton";
 import NavigationManager from "@/utils/NavigationManager";
+import { useImageUrls } from "@/hooks/useImageUrls";
 
 const MostPopularFood: FC = () => {
   const navigate = useNavigate();
@@ -25,6 +26,11 @@ const MostPopularFood: FC = () => {
     refetchOnMountOrArgChange: true,
     refetchOnReconnect: true,
   });
+
+  const mostPopularFoodImagePath = mostPopularFood
+    ? [mostPopularFood.image]
+    : [];
+  const mostPopularFoodImageUrl = useImageUrls(mostPopularFoodImagePath);
 
   const handleClick = () => {
     if (mostPopularFood) {
@@ -95,9 +101,9 @@ const MostPopularFood: FC = () => {
                 width: { xs: "100px", sm: "200px", xxl: "260px" },
                 cursor: "pointer",
               }}
-              image={`${import.meta.env.VITE_API_URL}/${mostPopularFood.image}`}
+              image={mostPopularFoodImageUrl[0]}
               loading="lazy"
-              alt={`Зображення ${mostPopularFood.name} найпопулярнішої їжі з усіх`}
+              alt="Зображення найпопулярнішої їжі з усіх"
               onClick={handleClick}
             />
             <CardContent

@@ -2,6 +2,7 @@ import type { FC } from "react";
 import Box from "@mui/material/Box";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import { GridRenderCellParams, GridRowModes } from "@mui/x-data-grid";
+import { useImageUrls } from "@/hooks/useImageUrls";
 
 interface IngredientsImageCellRendererProps extends GridRenderCellParams {
   rowModesModel: any;
@@ -15,6 +16,9 @@ const IngredientsImageCellRenderer: FC<IngredientsImageCellRendererProps> = (
 ) => {
   const { rowModesModel, handleIngredientsImageUpload } = params;
   const isInEditMode = rowModesModel[params.row.id]?.mode === GridRowModes.Edit;
+
+  const ingredientImagePath = params.value ? [params.value] : [];
+  const ingredientImageUrl = useImageUrls(ingredientImagePath);
 
   const handleClick = () => {
     if (isInEditMode) {
@@ -35,7 +39,7 @@ const IngredientsImageCellRenderer: FC<IngredientsImageCellRendererProps> = (
         />
       ) : params.value ? (
         <img
-          src={`${import.meta.env.VITE_API_URL}/${params.value}`}
+          src={ingredientImageUrl[0]}
           alt={params.row.name}
           style={{ width: "100%", height: "140px", objectFit: "cover" }}
         />

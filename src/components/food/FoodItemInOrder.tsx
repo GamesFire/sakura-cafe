@@ -26,6 +26,7 @@ import { Statuses } from "@/types/Status";
 import { useCancelOrderMutation } from "@/services/order";
 import { updateCurrentOrder } from "@/store/slices/orderSlice";
 import NavigationManager from "@/utils/NavigationManager";
+import { useImageUrls } from "@/hooks/useImageUrls";
 
 interface FoodItemInOrderProps {
   order: IOrder;
@@ -47,6 +48,9 @@ const FoodItemInOrder: FC<FoodItemInOrderProps> = ({ order }) => {
   const hiddenFoodCount = order.tray.foods.length - maxVisibleImages;
   const totalPrice = calculateTotalPrice(order.tray.foods);
   const formattedDate = formatDateTime(new Date(order.date));
+
+  const foodItemInOrderImagePaths = order.tray.foods.map((food) => food.image);
+  const foodItemInOrderImageUrls = useImageUrls(foodItemInOrderImagePaths);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -102,7 +106,7 @@ const FoodItemInOrder: FC<FoodItemInOrderProps> = ({ order }) => {
                   component="img"
                   key={index}
                   sx={{ width: "80px", height: "50px", borderRadius: "8px" }}
-                  src={`${import.meta.env.VITE_API_URL}/${food.image}`}
+                  src={foodItemInOrderImageUrls[index]}
                   alt={food.name}
                   loading="lazy"
                 />
@@ -152,7 +156,7 @@ const FoodItemInOrder: FC<FoodItemInOrderProps> = ({ order }) => {
                         borderBottomLeftRadius: "4px",
                         cursor: "pointer",
                       }}
-                      image={`${import.meta.env.VITE_API_URL}/${food.image}`}
+                      image={foodItemInOrderImageUrls[index]}
                       alt={food.name}
                       loading="lazy"
                       onClick={() => handleClickNavigate(food.id)}

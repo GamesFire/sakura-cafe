@@ -1,15 +1,17 @@
 import type { FC } from "react";
 import { Box } from "@mui/material";
 
-interface CarouselImageItemProps {
-  carouselItem: string;
+interface HeroImageCarouselItemProps {
+  heroImageCarouselItem: string;
 }
 
-const HeroImageCarousel: FC<CarouselImageItemProps> = ({ carouselItem }) => {
+const HeroImageCarousel: FC<HeroImageCarouselItemProps> = ({
+  heroImageCarouselItem,
+}) => {
   return (
     <Box
       component="img"
-      src={`/images/carousel/${carouselItem}`}
+      src={`/images/carousel/${heroImageCarouselItem}`}
       alt="Карусельне зображення"
       className="w-full max-lg:h-[400px]"
     />

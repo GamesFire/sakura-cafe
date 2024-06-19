@@ -1,4 +1,4 @@
-export const loadCarouselImages = (): string[] => {
+export const loadHeroImagesCarousel = (): string[] => {
   const images = import.meta.glob("/public/images/carousel/*.jpg", {
     query: "?url",
     import: "default",
@@ -17,7 +17,7 @@ export const loadCarouselImages = (): string[] => {
   });
 
   if (imagesList.length === 0) {
-    throw new Error("Зображень з каруселлю не знайдено.");
+    throw new Error("Зображень для каруселі не знайдено.");
   }
 
   return imagesList;

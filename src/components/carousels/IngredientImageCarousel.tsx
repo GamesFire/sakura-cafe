@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { IIngredient } from "@/store/models/IIngredient";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
+import { useImageUrls } from "@/hooks/useImageUrls";
 
 interface IngredientImageCarouselProps {
   ingredients: IIngredient[];
@@ -15,6 +16,11 @@ const IngredientImageCarousel: FC<IngredientImageCarouselProps> = ({
   const isSm = useMediaQuery(theme.breakpoints.between("sm", "md"));
   const isMd = useMediaQuery(theme.breakpoints.between("md", "lg"));
   const isXxl = useMediaQuery(theme.breakpoints.up("xxl"));
+
+  const ingredientImagePaths = ingredients.map(
+    (ingredient) => ingredient.image
+  );
+  const ingredientImageUrls = useImageUrls(ingredientImagePaths);
 
   const getVisibleItems = () => {
     if (isXs) return 1;
@@ -60,7 +66,7 @@ const IngredientImageCarousel: FC<IngredientImageCarouselProps> = ({
             alignItems: "center",
           }}
         >
-          {group.map((ingredient) => (
+          {group.map((ingredient, idx) => (
             <Box
               key={ingredient.id}
               sx={{
@@ -74,8 +80,8 @@ const IngredientImageCarousel: FC<IngredientImageCarouselProps> = ({
             >
               <Box
                 component="img"
-                src={`${import.meta.env.VITE_API_URL}/${ingredient.image}`}
-                alt={ingredient.title}
+                src={ingredientImageUrls[index * visibleItems + idx]}
+                alt="Зображення інгредієнта"
                 sx={{
                   width: "100%",
                   height: "100px",

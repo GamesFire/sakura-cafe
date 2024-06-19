@@ -11,6 +11,7 @@ import {
 import { IFood } from "@/store/models/IFood";
 import AddToTrayButton from "../tray/AddToTrayButton";
 import NavigationManager from "@/utils/NavigationManager";
+import { useImageUrls } from "@/hooks/useImageUrls";
 
 interface FoodItemProps {
   food: IFood;
@@ -18,6 +19,9 @@ interface FoodItemProps {
 
 const FoodItem: FC<FoodItemProps> = ({ food }) => {
   const navigate = useNavigate();
+
+  const foodItemImagePath = food ? [food.image] : [];
+  const foodItemImageUrl = useImageUrls(foodItemImagePath);
 
   const handleClickNavigate = () => {
     NavigationManager.navigateToFoodDetail(navigate, food.id);
@@ -42,7 +46,7 @@ const FoodItem: FC<FoodItemProps> = ({ food }) => {
           width: { xs: "100px", sm: "180px", xxl: "220px" },
           cursor: "pointer",
         }}
-        image={`${import.meta.env.VITE_API_URL}/${food.image}`}
+        image={foodItemImageUrl[0]}
         loading="lazy"
         alt={`Зображення ${food.name}`}
         onClick={handleClickNavigate}
