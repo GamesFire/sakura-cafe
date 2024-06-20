@@ -1,30 +1,101 @@
-# React + TypeScript + Vite
+# SakuraCafe
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![SakuraCafe](./sakura-cafe.jpg)
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+SakuraCafe is a website of a Japanese cuisine cafe. The main (fictitious) idea of the website is to provide an addictive site for Ukrainian users who are located in Japan, namely in the city of Tokyo. The website is fully Ukrainian-language and provides an intuitive and visually appealing interface that allows users to explore the cafe's menu, learn about its offers, place orders and interact with the cafe through various functions.
 
-## Expanding the ESLint configuration
+## Technology Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Vite**: Fast build tool for modern web development.
+- **TypeScript**: Typed JavaScript at scale.
+- **React**: JavaScript library for building user interfaces.
+- **Redux Toolkit**: State management library for React applications.
+- **RTK Query**: Toolset for fetching, caching, and updating server state in Redux applications.
+- **Tailwind CSS**: Utility-first CSS framework for designing custom user interfaces.
+- **MUI Material**: React components for faster and easier web development.
 
-- Configure the top-level `parserOptions` property like this:
+## Features
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+1. **Dynamic Content**: Home page, menu, about cafe, contacts, privacy policy, and terms and conditions pages.
+2. **Menu Functionality**:
+   - Categories with dish cards.
+   - Search by name and sorting functionalities.
+3. **Role-Based System**:
+   - Guest: Initial role upon registration.
+   - User: Access to order placement and order history upon email confirmation.
+   - Administrator: Full CRUD access to site content and order management.
+4. **Authentication and Authorization**:
+   - JWT tokens for secure authentication.
+   - Access token expires in 15 minutes; update token valid for 30 days.
+5. **Order Management**:
+   - Users can place, view, and cancel orders.
+   - Administrators can confirm or reject orders.
+6. **Rating System**:
+   - Users can rate dishes, and ratings contribute to the dish's overall rating.
+7. **Contact Us**:
+   - Users can submit reviews, visible to administrators for review and response.
+8. **Map Integration**:
+   - A map displaying the location of SakuraCafe. Note: The location is fictional and not a real cafe, as the actual location hosts a different Japanese cafe.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Detailed Features
+
+### Rating System
+
+- **Rating Each Dish**: Allows verified users to rate food products based on their satisfaction, helping other users make informed choices.
+- **User Ratings**: Users can rate each food item from 1 to 5 stars.
+- **Average Rating**: The average rating of all user ratings is displayed on each food card.
+
+### Order Placement and History
+
+- **Order Placement**: Users can place orders with the selected items in their tray.
+- **Order History**: Users can view the items in their tray and place orders. After a successful order, it appears in the order history with a status of "pending".
+- **Order Cancellation**: Users also have the option to cancel their last order.
+
+### Admin Panel
+
+- **Role Management**: Administrators can grant the role of administrator to verified users.
+- **CRUD Operations**: Administrators can perform the entire CRUD cycle on categories, food items, and ingredients.
+- **Order Management**: Administrators can reject or approve orders.
+- **Feedback Management**: Administrators can review and mark feedback as "processed".
+
+## Installation
+
+1. **Clone Repository**:
+
+   ```bash
+   git clone https://github.com/GamesFire/sakura-cafe.git
+   ```
+
+2. **Install Dependencies**:
+
+   ```bash
+   cd sakura-cafe
+   npm install
+   ```
+
+3. **Run Development Server**:
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Build and Preview for Production**:
+
+   ```bash
+   npm run build
+   npm run preview
+   ```
+
+5. **Environment Variables**:
+   Create a `.env` file based on `.env.local` and configure necessary variables.
+
+## Usage
+
+- Access the SakuraCafe website at `http://localhost:5173` for development or at `http://localhost:4173` for production in your browser.
+- Explore different pages, functionalities, and interact with the site as a guest, user, or administrator.
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit pull requests to contribute to the development of SakuraCafe.
