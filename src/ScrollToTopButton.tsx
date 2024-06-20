@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type FC } from "react";
 import { IconButton } from "@mui/material";
 import { ArrowUpward } from "@mui/icons-material";
 
-const ScrollToTopButton = () => {
-  const [isVisible, setIsVisible] = useState(false);
+const ScrollToTopButton: FC = () => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const toggleVisibility = () => {
     if (window.scrollY > 300) {

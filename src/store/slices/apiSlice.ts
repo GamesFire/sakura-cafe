@@ -13,7 +13,9 @@ import { AuthenticationResponse } from "@/store/models/response/AuthenticationRe
 import { CookieManager } from "@/utils/CookieManager";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_API_URL,
+  baseUrl: import.meta.env.PROD
+    ? import.meta.env.VITE_API_PROD_URL
+    : import.meta.env.VITE_API_DEV_URL,
   credentials: "include",
   prepareHeaders: (headers) => {
     const accessToken = CookieManager.getAccessToken();
