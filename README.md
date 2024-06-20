@@ -6,6 +6,10 @@
 
 SakuraCafe is a website of a Japanese cuisine cafe. The main (fictitious) idea of the website is to provide an addictive site for Ukrainian users who are located in Japan, namely in the city of Tokyo. The website is fully Ukrainian-language and provides an intuitive and visually appealing interface that allows users to explore the cafe's menu, learn about its offers, place orders and interact with the cafe through various functions.
 
+## Server Side API (sakura-cafe-api)
+
+Explore the server-side logic of SakuraCafe API in the [sakura-cafe-api repository](https://github.com/GamesFire/sakura-cafe-api.git). This repository handles various server-side operations, including database interactions, authentication, and more.
+
 ## Technology Stack
 
 - **Vite**: Fast build tool for modern web development.
