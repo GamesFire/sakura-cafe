@@ -24,7 +24,7 @@ Explore the server-side logic of SakuraCafe API in the [sakura-cafe-api reposito
 - **Redux Toolkit**: State management library for React applications.
 - **RTK Query**: Toolset for fetching, caching, and updating server state in Redux applications.
 - **Tailwind CSS**: Utility-first CSS framework for designing custom user interfaces.
-- **MUI Material**: React components for faster and easier web development.
+- **Material UI**: React components for faster and easier web development.
 
 ## Features
 
